@@ -19,3 +19,17 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
+
+  prod-deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
+    steps:
+      - name: Message
+        run: echo "This should deploy to prod"
+
+  test-deploy:
+    runs-on: ubuntu-latest
+    if: ${{  github.ref != 'refs/heads/master' }}
+    steps:
+      - name: Message
+        run: echo "This should deploy to test"
