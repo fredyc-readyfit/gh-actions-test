@@ -22,14 +22,14 @@ jobs:
 
   prod-deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Message
         run: echo "This should deploy to prod"
 
   test-deploy:
     runs-on: ubuntu-latest
-    if: ${{  github.ref != 'refs/heads/master' }}
+    if: ${{  github.ref != 'refs/heads/main' }}
     steps:
       - name: Message
         run: echo "This should deploy to test"
