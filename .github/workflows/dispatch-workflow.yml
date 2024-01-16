@@ -1,0 +1,41 @@
+name: deployment
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "The environment to deploy to"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - production
+          - test
+      service:
+        description: "The service to deploy"
+        required: true
+        type: choice
+        options:
+          - account-service
+          - document-worker-service
+          - gateway-service
+          - grading-service
+          - payment-service
+          - test-service
+          - grading-platform
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+
+      - name: Set short git commit SHA
+        run: |
+          calculatedSha=$(git rev-parse --short ${{ github.sha }}) 
+          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+
+      - name: Test
+        run: |
+          echo $COMMIT_SHORT_SHA
+          echo ${{ env.RELEASE_VERSION }}
