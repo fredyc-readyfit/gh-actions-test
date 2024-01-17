@@ -41,7 +41,7 @@ jobs:
         run: |
           echo $COMMIT_SHORT_SHA
           echo ${{ env.COMMIT_SHORT_SHA }}
-          echo ${{ secret.K8S_CLUSTER_NAME }}
+          echo ${{ secrets.K8S_CLUSTER_NAME }}
 
   deploy_grading_platform:
     if: github.event.inputs.service == "grading-platform"
@@ -55,4 +55,4 @@ jobs:
       - name: Test
         run: |
           echo ${{ github.event.inputs.service }}
-          echo ${{ secret.K8S_CLUSTER_NAME }}
+          echo ${{ secrets.K8S_CLUSTER_NAME }}
