@@ -5,11 +5,11 @@ on:
       environment:
         description: "The environment to deploy to"
         required: true
-        default: "test"
+        default: "TEST"
         type: choice
         options:
-          - production
-          - test
+          - PRODUCTION
+          - TEST
       service:
         description: "The service to deploy"
         required: true
@@ -23,9 +23,11 @@ on:
           - test-service
           - grading-platform
 jobs:
-  deploy:
+  deploy_backend_service:
+    if: contains(fromJSON('["account-service", "document-worker-service" "gateway-service", "grading-service", "payment-service", "test-service"]'), github.event.inputs.service )
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    environment:
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v4
@@ -38,4 +40,19 @@ jobs:
       - name: Test
         run: |
           echo $COMMIT_SHORT_SHA
-          echo ${{ env.RELEASE_VERSION }}
+          echo ${{ env.COMMIT_SHORT_SHA }}
+          echo ${{ secret.K8S_CLUSTER_NAME }}
+
+  deploy_grading_platform:
+    if: github.event.inputs.service == "grading-platform"
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+
+      - name: Test
+        run: |
+          echo ${{ github.event.inputs.service }}
+          echo ${{ secret.K8S_CLUSTER_NAME }}
