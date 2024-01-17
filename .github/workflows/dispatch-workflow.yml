@@ -43,6 +43,7 @@ jobs:
           echo ${{ env.COMMIT_SHORT_SHA }}
           echo ${{ secrets.K8S_CLUSTER_NAME }}
           echo ${{ github.event.inputs.environment }}
+          echo ${{ github.event.inputs.service }}
           echo ${{ vars.SOME_VAR }}
 
   deploy_grading_platform:
@@ -59,4 +60,5 @@ jobs:
           echo ${{ github.event.inputs.service }}
           echo ${{ secrets.K8S_CLUSTER_NAME }}
           echo ${{ github.event.inputs.environment }}
+          echo ${{ github.event.inputs.service }}
           echo ${{ vars.SOME_VAR }}
