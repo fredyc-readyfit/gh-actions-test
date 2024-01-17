@@ -36,6 +36,7 @@ jobs:
         run: |
           calculatedSha=$(git rev-parse --short ${{ github.sha }}) 
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+          echo "TAG=$(date --rfc-3339=date)" >> $GITHUB_ENV
 
       - name: Test
         run: |
@@ -45,6 +46,7 @@ jobs:
           echo ${{ github.event.inputs.environment }}
           echo ${{ github.event.inputs.service }}
           echo ${{ vars.SOME_VAR }}
+          echo ${{ env.TAG }}
 
   deploy_grading_platform:
     if: github.event.inputs.service == 'grading-platform'
