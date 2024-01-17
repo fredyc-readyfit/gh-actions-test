@@ -44,7 +44,7 @@ jobs:
           echo ${{ secrets.K8S_CLUSTER_NAME }}
 
   deploy_grading_platform:
-    if: github.event.inputs.service == "grading-platform"
+    if: github.event.inputs.service == 'grading-platform'
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
